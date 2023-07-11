@@ -5,6 +5,7 @@ from rest_framework import status
 import requests
 import json
 import pymongo
+from .services import objetosHoy
 
 # Create your views here.
 
@@ -27,6 +28,14 @@ def index(request):
     context = {}
     return render(request, 'index.html', context=context)
 
+
+def hoy(request):
+    data = objetosHoy()
+    print(data)
+    context = {
+        'data': data,
+    }
+    return render(request, 'hoy.html', context=context)
 
 def distancia(request):
     #data = objetosHoy()
