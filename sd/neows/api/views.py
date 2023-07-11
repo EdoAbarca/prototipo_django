@@ -33,6 +33,21 @@ def distancia(request):
     context = {}
     return render(request, 'distancia.html', context=context)
 
+def acercandose(request):
+    #data = objetosHoy()
+    context = {}
+    return render(request, 'acercandose.html', context=context)
+
+def cercano(request):
+    #data = objetosHoy()
+    context = {}
+    return render(request, 'cercano.html', context=context)
+
+def lejano(request):
+    #data = objetosHoy()
+    context = {}
+    return render(request, 'lejano.html', context=context)
+
 
 class NeoWSViewTest(APIView):
     def get(self, request):

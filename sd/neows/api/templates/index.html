@@ -3,29 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>NeoWs API</title>
-    <link rel="stylesheet" href="../static/styles.css" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/styles.css' %}" />
 </head>
 <body>
     <header>
         <h1> Medias de NeoWs </h1>
     </header>
-    <table>
+    <table class="content-table">
         <thead>
             <tr>
                 <th> Asteorides a menos de 5000 km </th>
-                <th> <button href="/distancia"> Obtener </button> </th>
+                <th class="btn-secondary-container">
+                    <button class="btn-secondary">
+                        <a style="color: white;" href="{% url 'distancia' %}"> Obtener </a> </button>
+                </th>
             </tr>
             <tr>
                 <th> Asteorides acercándose </th>
-                <th> <button> Obtener </button> </th>
+                <th class="btn-secondary-container">
+                    <button class="btn-secondary">
+                        <a style="color: white;" href="{% url 'acercandose' %}"> Obtener </a> </button>
+                </th>
             </tr>
             <tr>
                 <th> Asteroide más cercano </th>
-                <th> <button> Obtener </button> </th>
+                <th class="btn-secondary-container">
+                    <button class="btn-secondary">
+                        <a style="color: white;" href="{% url 'cercano' %}"> Obtener </a> </button>
+                </th>
             </tr>
             <tr>
                 <th> Asteroide más lejano </th>
-                <th> <button> Obtener </button> </th>
+                <th class="btn-secondary-container">
+                    <button class="btn-secondary">
+                        <a style="color: white;" href="{% url 'lejano' %}"> Obtener </a> </button>
+                </th>
             </tr>
         </thead>
     </table>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>NeoWs API</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/styles.css' %}" />
+</head>
+<body>
+    <header>
+        <h1> Medias de NeoWs </h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'index'%}"> Volver </a></li>
+            <li><a href="{% url 'distancia'%}"> Asteroides a más de 500 km </a></li>
+            <li><a href="{% url 'acercandose'%}"> Asteroides acercandose </a></li>
+            <li><a href="{% url 'cercano'%}">  Asteroide más cercano</a></li>
+        </ul>
+    </nav>
+    <h2> Asteoride más lejano al dia de hoy</h2>
+    <!-- Algún for each q nos lea todo el context con lo que cumpla la premisa -->
+</body>
+</html>
