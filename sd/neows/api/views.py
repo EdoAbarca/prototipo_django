@@ -49,14 +49,13 @@ class NeoWSView(APIView):
         except Exception as key_error:
             return Response({'message': 'invalid request 1', 'error': str(key_error)},
                             status=status.HTTP_400_BAD_REQUEST)
-        print(init_date, end_date, key)
+        #print(init_date, end_date, key)
         try:
             url = f'https://api.nasa.gov/neo/rest/v1/feed?start_date={init_date}&end_date={end_date}&api_key={key}'
-            print(url)
+            #print(url)
             request_neows = requests.get(url)
-            print(request_neows)
-            response_neows = request_neows.content.decode('utf-8')
-            print(response_neows)
+            #print(request_neows)
+            response_neows = request_neows.json()
         except Exception as e:
             return Response({'message': 'invalid request 2', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response({'message': 'success', 'data': response_neows}, status=status.HTTP_201_CREATED)
