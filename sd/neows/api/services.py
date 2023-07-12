@@ -1,5 +1,6 @@
-import pymongo
 import requests as req
+import pymongo
+
 
 user = "mongo"
 password = "mongo"
@@ -13,6 +14,9 @@ client = pymongo.MongoClient(f"mongodb://{user}:{password}@{host}:{port}/{main_d
 
 # Base de datos a usar
 db = client.get_database(database)
+
+#Coleccion
+asteroides = db.get_collection("asteroides")
 
 
 def objetosHoy(params=None):

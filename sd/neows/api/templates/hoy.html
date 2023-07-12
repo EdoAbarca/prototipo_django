@@ -20,8 +20,10 @@
         </ul>
     </nav>
     <h2> Asteorides registrados hoy </h2>
+    {% for key in data.near_earth_objects %}
     <div>
-
+        {{ key }}
     </div>
+    {% endfor %}
 </body>
 </html>

@@ -89,7 +89,7 @@ class OrbitalData(models.Model):
 
 class NearObject(models.Model):
     link = models.CharField(max_length=500)
-    id = models.CharField(max_length=10)
+    ast_id = models.CharField(max_length=10)
     neo_reference_id = models.CharField(max_length=10)
     name = models.CharField(max_length=50)
     nasa_jpl_url = models.CharField(max_length=100)
