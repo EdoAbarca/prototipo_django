@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  django:
+    build: .
+    container_name: django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_INITDB_DATABASE: neows
+    ports:
+      - 27017:27017
