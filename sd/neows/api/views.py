@@ -3,9 +3,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 import requests
-import json
 import pymongo
-from .services import objetosHoy
+from .services import objetosHoy, asteroidesDistancia
+from datetime import date
 
 # Create your views here.
 
@@ -30,30 +30,39 @@ def index(request):
 
 
 def hoy(request):
+    fecha = date.today().strftime("%Y-%m-%d")
     data = objetosHoy()
-    print(data)
+    near_objects = data.get('near_earth_objects').get(fecha)
+    filtrados = list()
+    for key in near_objects:
+        print(key)
+        filtrados.append(key)
     context = {
-        'data': data,
+        'data': filtrados,
     }
     return render(request, 'hoy.html', context=context)
 
+
 def distancia(request):
-    #data = objetosHoy()
+    data = asteroidesDistancia()
     context = {}
     return render(request, 'distancia.html', context=context)
 
+
 def acercandose(request):
-    #data = objetosHoy()
+    # data = objetosHoy()
     context = {}
     return render(request, 'acercandose.html', context=context)
 
+
 def cercano(request):
-    #data = objetosHoy()
+    # data = objetosHoy()
     context = {}
     return render(request, 'cercano.html', context=context)
 
+
 def lejano(request):
-    #data = objetosHoy()
+    # data = objetosHoy()
     context = {}
     return render(request, 'lejano.html', context=context)
 
@@ -73,12 +82,12 @@ class NeoWSView(APIView):
         except Exception as key_error:
             return Response({'message': 'invalid request 1', 'error': str(key_error)},
                             status=status.HTTP_400_BAD_REQUEST)
-        #print(init_date, end_date, key)
+        # print(init_date, end_date, key)
         try:
             url = f'https://api.nasa.gov/neo/rest/v1/feed?start_date={init_date}&end_date={end_date}&api_key={key}'
-            #print(url)
+            # print(url)
             request_neows = requests.get(url)
-            #print(request_neows)
+            # print(request_neows)
             response_neows = request_neows.json()
         except Exception as e:
             return Response({'message': 'invalid request 2', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

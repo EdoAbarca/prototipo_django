@@ -1,29 +1,51 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>NeoWs API</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static '/styles.css' %}" />
-</head>
-<body>
-    <header>
-        <h1> Medias de NeoWs </h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="{% url 'index'%}"> Volver </a></li>
-            <li><a href="{% url 'distancia'%}"> Asteroides a más de 5000 km </a></li>
-            <li><a href="{% url 'acercandose'%}"> Asteroides acercandose </a></li>
-            <li><a href="{% url 'cercano'%}"> Asteroide más cercano </a></li>
-            <li><a href="{% url 'lejano'%}">  Asteroide más lejano</a></li>
-        </ul>
-    </nav>
-    <h2> Asteorides registrados hoy </h2>
-    {% for key in data.near_earth_objects %}
-    <div>
-        {{ key }}
-    </div>
-    {% endfor %}
-</body>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>NeoWs API</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static '/styles.css' %}" />
+    </head>
+    <body>
+        <header>
+            <h1> Medias de NeoWs </h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index'%}"> Volver </a></li>
+                <li><a href="{% url 'distancia'%}"> Asteroides a menos de 5000 km </a></li>
+                <li><a href="{% url 'acercandose'%}"> Asteroides acercandose </a></li>
+                <li><a href="{% url 'cercano'%}"> Asteroide más cercano </a></li>
+                <li><a href="{% url 'lejano'%}">  Asteroide más lejano</a></li>
+            </ul>
+        </nav>
+        <h2> Asteorides registrados hoy </h2>
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Diametro aproximado Min</th>
+                    <th>Diametro aproximado Max</th>
+                    <th>Peligroso</th>
+                    <th>Fecha de acercamiento máximo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for near in data %}
+                    <tr>
+                        <td> {{ near.id }} </td>
+                        <td> {{ near.name }} </td>
+                        <td> {{ near.kilometers.meters.estimated_diameter_min }} </td>
+                        <td> {{ near.kilometers.meters.estimated_diameter_max }} </td>
+                        <td> {{ near.is_potentially_hazardous_asteroid }} </td>
+                        <td> {{ near.close_approach_data.close_approach_date }} </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+    <footer style="background-color: #a44b01; color: white; padding: 10px; text-align: center; margin-top: 5px;">
+        Información obtenida desde la API de <a href="https://www.neowsapp.com/swagger-ui/index.html#/"> NeoWs </a>
+    </footer>
 </html>
