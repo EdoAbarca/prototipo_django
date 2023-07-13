@@ -20,6 +20,34 @@
         </ul>
     </nav>
     <h2> Asteorides a menos de 5000 km de distancia</h2>
-    <!-- Algún for each q nos lea todo el context con lo que cumpla la premisa -->
-</body>
+    <table class="content-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Diametro aproximado Min [m]</th>
+                    <th>Diametro aproximado Máx [m]</th>
+                    <th>Peligroso</th>
+                    <th>Fecha de acercamiento máximo</th>
+                    <th>Distancia de acercamiento máxima [km]</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for near in data %}
+                    <tr>
+                        <td> {{ near.id }} </td>
+                        <td> {{ near.name }} </td>
+                        <td> {{ near.estimated_diameter.estimated_diameter_min }} </td>
+                        <td> {{ near.estimated_diameter.estimated_diameter_max }} </td>
+                        <td> {{ near.is_potentially_hazardous_asteroid }} </td>
+                        <td> {{ near.close_approach_data.close_approach_date }} </td>
+                        <td> {{ near.close_approach_data.miss_distance }} </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+    <footer style="background-color: #a44b01; color: white; padding: 10px; text-align: center; margin-top: 5px;">
+        Información obtenida desde la API de <a href="https://www.neowsapp.com/swagger-ui/index.html#/"> NeoWs </a>
+    </footer>
 </html>

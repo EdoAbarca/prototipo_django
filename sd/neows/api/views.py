@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import requests
 import pymongo
-from .services import objetosHoy, asteroidesDistancia
+from .services import objetosHoy, distanciaM, cercanoS, lejanoS
 from datetime import date
 
 # Create your views here.
@@ -31,21 +31,18 @@ def index(request):
 
 def hoy(request):
     fecha = date.today().strftime("%Y-%m-%d")
-    data = objetosHoy()
-    near_objects = data.get('near_earth_objects').get(fecha)
-    filtrados = list()
-    for key in near_objects:
-        print(key)
-        filtrados.append(key)
+    data = objetosHoy(fecha)
     context = {
-        'data': filtrados,
+        'data': data,
     }
     return render(request, 'hoy.html', context=context)
 
 
 def distancia(request):
-    data = asteroidesDistancia()
-    context = {}
+    data = distanciaM()
+    context = {
+        'data': data,
+    }
     return render(request, 'distancia.html', context=context)
 
 
@@ -56,39 +53,16 @@ def acercandose(request):
 
 
 def cercano(request):
-    # data = objetosHoy()
-    context = {}
+    data = cercanoS()
+    context = {
+        'data': data,
+    }
     return render(request, 'cercano.html', context=context)
 
 
 def lejano(request):
-    # data = objetosHoy()
-    context = {}
+    data = lejanoS()
+    context = {
+        'data': data,
+    }
     return render(request, 'lejano.html', context=context)
-
-
-class NeoWSViewTest(APIView):
-    def get(self, request):
-        return Response({'message': 'hello world'}, status=status.HTTP_200_OK)
-
-
-class NeoWSView(APIView):
-    def post(self, request):
-        data = request.data
-        try:
-            init_date = data['init_date']
-            end_date = data['end_date']
-            key = data['key']
-        except Exception as key_error:
-            return Response({'message': 'invalid request 1', 'error': str(key_error)},
-                            status=status.HTTP_400_BAD_REQUEST)
-        # print(init_date, end_date, key)
-        try:
-            url = f'https://api.nasa.gov/neo/rest/v1/feed?start_date={init_date}&end_date={end_date}&api_key={key}'
-            # print(url)
-            request_neows = requests.get(url)
-            # print(request_neows)
-            response_neows = request_neows.json()
-        except Exception as e:
-            return Response({'message': 'invalid request 2', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'message': 'success', 'data': response_neows}, status=status.HTTP_201_CREATED)

@@ -20,6 +20,39 @@
         </ul>
     </nav>
     <h2> Asteoride más lejano al dia de hoy</h2>
-    <!-- Algún for each q nos lea todo el context con lo que cumpla la premisa -->
+    <table class="content-table">
+            <tr>
+                <th>Fecha registro</th>
+                <td> {{ data.fecha }} </td>
+            </tr>
+            <tr>
+                <th> Id </th>
+                <td> {{ data.id }} </td>
+            </tr>
+            <tr>
+                <th> Nombre </th>
+                <td> {{ data.name }} </td>
+            </tr>
+            <tr>
+                <th> Diametro aprox. Min [m] </th>
+                <td> {{ data.estimated_diameter.estimated_diameter_min }} </td>
+            </tr>
+            <tr>
+                <th> Diametro aprox. Máx [m] </th>
+                <td> {{ data.estimated_diameter.estimated_diameter_max }} </td>
+            </tr>
+            <tr>
+                <th> Peligroso </th>
+                <td> {{ data.is_potentially_hazardous_asteroid }} </td>
+            </tr>
+            <tr>
+                <th> Fecha de acercamiento máxima </th>
+                <td> {{ data.close_approach_data.close_approach_date }} </td>
+            </tr>
+            <tr>
+                <th> Distancia de acercamiento máxima [km] </th>
+                <td> {{ data.close_approach_data.miss_distance }} </td>
+            </tr>
+        </table>
 </body>
 </html>

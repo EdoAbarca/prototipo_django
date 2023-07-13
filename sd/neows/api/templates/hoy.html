@@ -23,23 +23,27 @@
         <table class="content-table">
             <thead>
                 <tr>
+                    <th>Fecha registro</th>
                     <th>Id</th>
                     <th>Nombre</th>
-                    <th>Diametro aproximado Min</th>
-                    <th>Diametro aproximado Max</th>
+                    <th>Diametro aproximado Min [m]</th>
+                    <th>Diametro aproximado Máx [m]</th>
                     <th>Peligroso</th>
-                    <th>Fecha de acercamiento máximo</th>
+                    <th>Fecha de acercamiento máxima</th>
+                    <th>Distancia de acercamiento máxima [km]</th>
                 </tr>
             </thead>
             <tbody>
                 {% for near in data %}
                     <tr>
+                        <td> {{ near.fecha}}</td>
                         <td> {{ near.id }} </td>
                         <td> {{ near.name }} </td>
-                        <td> {{ near.kilometers.meters.estimated_diameter_min }} </td>
-                        <td> {{ near.kilometers.meters.estimated_diameter_max }} </td>
+                        <td> {{ near.estimated_diameter.estimated_diameter_min }} </td>
+                        <td> {{ near.estimated_diameter.estimated_diameter_max }} </td>
                         <td> {{ near.is_potentially_hazardous_asteroid }} </td>
                         <td> {{ near.close_approach_data.close_approach_date }} </td>
+                        <td> {{ near.close_approach_data.miss_distance }} </td>
                     </tr>
                 {% endfor %}
             </tbody>
