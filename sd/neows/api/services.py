@@ -3,7 +3,7 @@ from datetime import date
 
 user = "mongo"
 password = "mongo"
-host = "localhost"
+host = "mongodb"
 port = "27017"
 main_database = "admin"
 database = "neows"
