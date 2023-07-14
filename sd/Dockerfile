@@ -1,8 +1,9 @@
-FROM python:3.11-alpine3.18
+FROM python:3.11-slim-bullseye
+#RUN pip install --upgrade pip  
 ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 
-COPY ./neows ./
+#COPY ./neows ./
 
 #RUN virtualenv -p python3 env
 
@@ -12,15 +13,12 @@ COPY ./neows ./
 #pip install django djangorestframework django-cors-headers requests pymongo && \
 #python manage.py runserver 
 
+COPY requirements.txt requirements.txt
 
-COPY ./requirements.txt ./
+RUN pip3 install -r requirements.txt
 
-RUN pip install -r requirements.txt
+COPY . .
 
-#COPY ./ ./
+EXPOSE 8000
 
-#WORKDIR /app/neows
-
-#CMD ["python","manage.py","runserver","0.0.0.0:8000"]
-
-#CMD ["sh", "entrypoint.sh"]
+#CMD ["python3","manage.py","runserver","0.0.0.0:8000"]
