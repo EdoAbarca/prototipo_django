@@ -8,8 +8,7 @@ services:
       - .:/app
     ports:
       - "8000:8000"
-    image: eddindocker/sd
-    command: python manage.py runserver 0.0.0.0:8000
+    image: eddindocker/sd:latest
     depends_on:
       - mongodb
     networks:

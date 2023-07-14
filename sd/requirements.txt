@@ -3,3 +3,4 @@ djangorestframework==3.14.0
 django-cors-headers==4.2.0
 pymongo==4.4.0
 requests==2.31.0
+kafka-python==2.0.2
