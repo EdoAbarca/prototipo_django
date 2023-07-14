@@ -1,5 +1,5 @@
-import requests as req
 import pymongo
+from datetime import date
 
 user = "mongo"
 password = "mongo"
@@ -34,13 +34,55 @@ def distanciaM():
     return data
 
 
+def peligroS():
+    filtro = {"is_potentially_hazardous_asteroid": True}
+    data = asteroides.find(filtro)
+    return data
+
+
 def cercanoS():
-    filtro = {}
+    fecha = date.today()
+    fecha = fecha.strftime("%Y-%m-%d")
+    filtro = {"fecha": {"$eq": fecha}}
     data = asteroides.find_one(filtro, sort=[("close_approach_data.miss_distance", pymongo.ASCENDING)])
     return data
 
 
 def lejanoS():
-    filtro = {}
+    fecha = date.today()
+    fecha = fecha.strftime("%Y-%m-%d")
+    filtro = {"fecha": {"$eq": fecha}}
     data = asteroides.find_one(filtro, sort=[("close_approach_data.miss_distance", pymongo.DESCENDING)])
     return data
+
+
+def mediaAsteroides():
+    fechas = asteroides.distinct('fecha')
+    cont = 0
+    for fecha in fechas:
+        filtro = {'fecha': fecha}
+        cont = cont + asteroides.count_documents(filtro)
+
+    largo = len(fechas)
+    promedio = int(cont / largo)
+    return promedio
+
+
+def mediaAsteroidesDist():
+    filtro = {}
+    cont = asteroides.count_documents(filtro)  # Total de documentos
+
+    filtro = {"close_approach_data.miss_distance": {"$lt": 30000000}}
+    cercanos = asteroides.count_documents(filtro)
+    promedio = int(cont / cercanos)
+    return promedio
+
+
+def mediaAsteroidesPelig():
+    filtro = {}
+    cont = asteroides.count_documents(filtro)  # Total de documentos
+
+    filtro = {"is_potentially_hazardous_asteroid": True}
+    peligrosos = asteroides.count_documents(filtro)
+    promedio = int(cont / peligrosos)
+    return promedio

@@ -13,13 +13,14 @@
         <nav>
             <ul>
                 <li><a href="{% url 'index'%}"> Volver </a></li>
-                <li><a href="{% url 'distancia'%}"> Asteroides a menos de 5000 km </a></li>
-                <li><a href="{% url 'acercandose'%}"> Asteroides acercandose </a></li>
+                <li><a href="{% url 'distancia'%}"> Asteroides a menos de 30MM km </a></li>
+                <li><a href="{% url 'peligroso'%}"> Asteroides considerados peligrosos </a></li>
                 <li><a href="{% url 'cercano'%}"> Asteroide más cercano </a></li>
                 <li><a href="{% url 'lejano'%}">  Asteroide más lejano</a></li>
             </ul>
         </nav>
         <h2> Asteorides registrados hoy </h2>
+        <h2> La media de asteroides registrados por dia es de: {{ media }}</h2>
         <table class="content-table">
             <thead>
                 <tr>

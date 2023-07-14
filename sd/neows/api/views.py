@@ -1,10 +1,5 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-import requests
-import pymongo
-from .services import objetosHoy, distanciaM, cercanoS, lejanoS
+from .services import *
 from datetime import date
 
 # Create your views here.
@@ -32,24 +27,32 @@ def index(request):
 def hoy(request):
     fecha = date.today().strftime("%Y-%m-%d")
     data = objetosHoy(fecha)
+    media = mediaAsteroides()
     context = {
         'data': data,
+        'media': media,
     }
     return render(request, 'hoy.html', context=context)
 
 
 def distancia(request):
     data = distanciaM()
+    media = mediaAsteroidesDist()
     context = {
         'data': data,
+        'media': media
     }
     return render(request, 'distancia.html', context=context)
 
 
-def acercandose(request):
-    # data = objetosHoy()
-    context = {}
-    return render(request, 'acercandose.html', context=context)
+def peligro(request):
+    data = peligroS()
+    media = mediaAsteroidesPelig()
+    context = {
+        'data': data,
+        'media': media,
+    }
+    return render(request, 'peligroso.html', context=context)
 
 
 def cercano(request):

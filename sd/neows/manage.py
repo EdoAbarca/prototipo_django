@@ -49,9 +49,10 @@ def main():
 
 
 def dataHoy(params=None):
-    fecha = date.today()  # - timedelta(days=1)
+    fecha = date.today()
     fecha = fecha.strftime("%Y-%m-%d")
     docs = asteroides.find()
+    print(fecha)
     flag = 0  # Nos indica si ya se ingresaron los datos de asteroides del dia de hoy (0: no, 1: si)
     for documento in docs:
         if documento['fecha'] == fecha:
@@ -107,18 +108,21 @@ def pasarData(flag):
         consumer = KafkaConsumer(topic_name1, group_id='id1', bootstrap_servers=['localhost:9092'],
                                  consumer_timeout_ms=1000, value_deserializer=lambda m: loads(m.decode('utf-8')))
         filtrarData(consumer)
+        print('pasando a 0')
         consumer.close()
 
     if flag == 1:
         consumer = KafkaConsumer(topic_name2, group_id='id2', bootstrap_servers=['localhost:9092'],
                                  consumer_timeout_ms=1000, value_deserializer=lambda m: loads(m.decode('utf-8')))
         filtrarData(consumer)
+        print('pasando a 1')
         consumer.close()
 
     if flag == 2:
         consumer = KafkaConsumer(topic_name3, group_id='id3', bootstrap_servers=['localhost:9092'],
                                  consumer_timeout_ms=1000, value_deserializer=lambda m: loads(m.decode('utf-8')))
         filtrarData(consumer)
+        print('pasando a 2')
         consumer.close()
 
 

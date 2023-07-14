@@ -5,7 +5,7 @@ from api import views
 urlpatterns = [
     path('indice/', views.index, name='index'),
     path('distancia/', views.distancia, name='distancia'),
-    path('acercandose/', views.acercandose, name='acercandose'),
+    path('peligroso/', views.peligro, name='peligroso'),
     path('cercano/', views.cercano, name='cercano'),
     path('lejano/', views.lejano, name='lejano'),
     path('hoy/', views.hoy, name='hoy'),
