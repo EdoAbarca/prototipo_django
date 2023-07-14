@@ -13,7 +13,7 @@ import os
 
 user = "mongo"
 password = "mongo"
-host = "localhost"
+host = "mongodb"
 port = "27017"
 main_database = "admin"
 database = "neows"
@@ -31,7 +31,7 @@ asteroides = db.get_collection("asteroides")
 topic_name1 = 'Topic1'
 topic_name2 = 'Topic2'
 topic_name3 = 'Topic3'
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'], value_serializer=lambda x: dumps(x).encode('utf-8'))
+producer = KafkaProducer(bootstrap_servers=['host.docker.internal:29092'], value_serializer=lambda x: dumps(x).encode('utf-8'))
 
 
 def main():
@@ -105,21 +105,21 @@ def filtrarData(consumer):
 def pasarData(flag):
     print('pid: ' + str(os.getpid()))
     if flag == 0:
-        consumer = KafkaConsumer(topic_name1, group_id='id1', bootstrap_servers=['localhost:9092'],
+        consumer = KafkaConsumer(topic_name1, group_id='id1', bootstrap_servers=['host.docker.internal:29092'],
                                  consumer_timeout_ms=1000, value_deserializer=lambda m: loads(m.decode('utf-8')))
         filtrarData(consumer)
         print('pasando a 0')
         consumer.close()
 
     if flag == 1:
-        consumer = KafkaConsumer(topic_name2, group_id='id2', bootstrap_servers=['localhost:9092'],
+        consumer = KafkaConsumer(topic_name2, group_id='id2', bootstrap_servers=['host.docker.internal:29092'],
                                  consumer_timeout_ms=1000, value_deserializer=lambda m: loads(m.decode('utf-8')))
         filtrarData(consumer)
         print('pasando a 1')
         consumer.close()
 
     if flag == 2:
-        consumer = KafkaConsumer(topic_name3, group_id='id3', bootstrap_servers=['localhost:9092'],
+        consumer = KafkaConsumer(topic_name3, group_id='id3', bootstrap_servers=['host.docker.internal:29092'],
                                  consumer_timeout_ms=1000, value_deserializer=lambda m: loads(m.decode('utf-8')))
         filtrarData(consumer)
         print('pasando a 2')
