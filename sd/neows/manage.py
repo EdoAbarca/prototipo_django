@@ -31,7 +31,10 @@ asteroides = db.get_collection("asteroides")
 topic_name1 = 'Topic1'
 topic_name2 = 'Topic2'
 topic_name3 = 'Topic3'
-producer = KafkaProducer(bootstrap_servers=['host.docker.internal:29092'], value_serializer=lambda x: dumps(x).encode('utf-8'))
+producer = KafkaProducer(bootstrap_servers=['host.docker.internal:29092'],
+                         value_serializer=lambda x: dumps(x).encode('utf-8'))
+
+fecha = date.today().strftime("%Y-%m-%d")
 
 
 def main():
@@ -49,8 +52,6 @@ def main():
 
 
 def dataHoy(params=None):
-    fecha = date.today()
-    fecha = fecha.strftime("%Y-%m-%d")
     docs = asteroides.find()
     print(fecha)
     flag = 0  # Nos indica si ya se ingresaron los datos de asteroides del dia de hoy (0: no, 1: si)
@@ -81,9 +82,9 @@ def dataHoy(params=None):
 
 
 def filtrarData(consumer):
-    fecha = date.today()
-    fecha = fecha.strftime("%Y-%m-%d")
+    print('Filtrando data')
     for message in consumer:
+        print('mensaje')
         if isinstance(message.value, dict):
             aux = {"fecha": fecha,
                    "id": message.value['id'],
@@ -106,21 +107,21 @@ def pasarData(flag):
     print('pid: ' + str(os.getpid()))
     if flag == 0:
         consumer = KafkaConsumer(topic_name1, group_id='id1', bootstrap_servers=['host.docker.internal:29092'],
-                                 consumer_timeout_ms=1000, value_deserializer=lambda m: loads(m.decode('utf-8')))
+                                 consumer_timeout_ms=5000, value_deserializer=lambda m: loads(m.decode('utf-8')))
         filtrarData(consumer)
         print('pasando a 0')
         consumer.close()
 
     if flag == 1:
         consumer = KafkaConsumer(topic_name2, group_id='id2', bootstrap_servers=['host.docker.internal:29092'],
-                                 consumer_timeout_ms=1000, value_deserializer=lambda m: loads(m.decode('utf-8')))
+                                 consumer_timeout_ms=5000, value_deserializer=lambda m: loads(m.decode('utf-8')))
         filtrarData(consumer)
         print('pasando a 1')
         consumer.close()
 
     if flag == 2:
         consumer = KafkaConsumer(topic_name3, group_id='id3', bootstrap_servers=['host.docker.internal:29092'],
-                                 consumer_timeout_ms=1000, value_deserializer=lambda m: loads(m.decode('utf-8')))
+                                 consumer_timeout_ms=5000, value_deserializer=lambda m: loads(m.decode('utf-8')))
         filtrarData(consumer)
         print('pasando a 2')
         consumer.close()

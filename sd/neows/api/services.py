@@ -21,7 +21,6 @@ asteroides = db.get_collection("asteroides")
 #########################################################
 # Funciones con llamadas a MongoDB
 
-# Cambiar consulta a la APi por Consulta a la DB
 def objetosHoy(fecha):
     filtro = {"fecha": {"$eq": fecha}}
     data = asteroides.find(filtro)
@@ -40,17 +39,13 @@ def peligroS():
     return data
 
 
-def cercanoS():
-    fecha = date.today()
-    fecha = fecha.strftime("%Y-%m-%d")
+def cercanoS(fecha):
     filtro = {"fecha": {"$eq": fecha}}
     data = asteroides.find_one(filtro, sort=[("close_approach_data.miss_distance", pymongo.ASCENDING)])
     return data
 
 
-def lejanoS():
-    fecha = date.today()
-    fecha = fecha.strftime("%Y-%m-%d")
+def lejanoS(fecha):
     filtro = {"fecha": {"$eq": fecha}}
     data = asteroides.find_one(filtro, sort=[("close_approach_data.miss_distance", pymongo.DESCENDING)])
     return data
@@ -84,5 +79,8 @@ def mediaAsteroidesPelig():
 
     filtro = {"is_potentially_hazardous_asteroid": True}
     peligrosos = asteroides.count_documents(filtro)
-    promedio = int(cont / peligrosos)
+    if peligrosos != 0:
+        promedio = int(cont / peligrosos)
+    else:
+        promedio = 0
     return promedio

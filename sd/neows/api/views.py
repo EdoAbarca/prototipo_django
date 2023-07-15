@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .services import *
-from datetime import date
+from datetime import date, timedelta
 
 # Create your views here.
 
@@ -18,6 +18,8 @@ client = pymongo.MongoClient(f"mongodb://{user}:{password}@{host}:{port}/{main_d
 # Base de datos a usar
 db = client.get_database(database)
 
+fecha = (date.today()).strftime("%Y-%m-%d")
+
 
 def index(request):
     context = {}
@@ -25,7 +27,6 @@ def index(request):
 
 
 def hoy(request):
-    fecha = date.today().strftime("%Y-%m-%d")
     data = objetosHoy(fecha)
     media = mediaAsteroides()
     context = {
@@ -56,7 +57,7 @@ def peligro(request):
 
 
 def cercano(request):
-    data = cercanoS()
+    data = cercanoS(fecha)
     context = {
         'data': data,
     }
@@ -64,7 +65,7 @@ def cercano(request):
 
 
 def lejano(request):
-    data = lejanoS()
+    data = lejanoS(fecha)
     context = {
         'data': data,
     }
