@@ -31,8 +31,25 @@ asteroides = db.get_collection("asteroides")
 topic_name1 = 'Topic1'
 topic_name2 = 'Topic2'
 topic_name3 = 'Topic3'
-producer = KafkaProducer(bootstrap_servers=['host.docker.internal:29092'],
-                         value_serializer=lambda x: dumps(x).encode('utf-8'))
+
+try:
+
+    producer = KafkaProducer(bootstrap_servers=['host.docker.internal:29092'],
+                             value_serializer=lambda x: dumps(x).encode('utf-8'))
+except:
+    print("29092 no sirvio")
+
+try:
+    producer = KafkaProducer(bootstrap_servers=['127.0.0.1:9092'],
+                             value_serializer=lambda x: dumps(x).encode('utf-8'))
+except:
+    print("9092 no sirvio")
+
+try:
+    producer = KafkaProducer(bootstrap_servers=['kafka1:19092'],
+                             value_serializer=lambda x: dumps(x).encode('utf-8'))
+except:
+    print("19092 no sirvio")
 
 fecha = date.today().strftime("%Y-%m-%d")
 
