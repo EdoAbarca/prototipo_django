@@ -32,24 +32,9 @@ topic_name1 = 'Topic1'
 topic_name2 = 'Topic2'
 topic_name3 = 'Topic3'
 
-try:
-
-    producer = KafkaProducer(bootstrap_servers=['host.docker.internal:29092'],
+producer = KafkaProducer(bootstrap_servers=['host.docker.internal:29092'],
+                             api_version=(7, 3, 2),
                              value_serializer=lambda x: dumps(x).encode('utf-8'))
-except:
-    print("29092 no sirvio")
-
-try:
-    producer = KafkaProducer(bootstrap_servers=['127.0.0.1:9092'],
-                             value_serializer=lambda x: dumps(x).encode('utf-8'))
-except:
-    print("9092 no sirvio")
-
-try:
-    producer = KafkaProducer(bootstrap_servers=['kafka1:19092'],
-                             value_serializer=lambda x: dumps(x).encode('utf-8'))
-except:
-    print("19092 no sirvio")
 
 fecha = date.today().strftime("%Y-%m-%d")
 
@@ -107,12 +92,15 @@ def filtrarData(consumer):
                    "id": message.value['id'],
                    "name": message.value['name'],
                    "estimated_diameter": {
-                       "estimated_diameter_min": message.value['estimated_diameter']['meters']['estimated_diameter_min'],
-                       "estimated_diameter_max": message.value['estimated_diameter']['meters']['estimated_diameter_max']},  # Solo metros
+                       "estimated_diameter_min": message.value['estimated_diameter']['meters'][
+                           'estimated_diameter_min'],
+                       "estimated_diameter_max": message.value['estimated_diameter']['meters'][
+                           'estimated_diameter_max']},  # Solo metros
                    "is_potentially_hazardous_asteroid": message.value['is_potentially_hazardous_asteroid'],
                    "close_approach_data": {
                        "close_approach_date": message.value['close_approach_data'][0]['close_approach_date'],
-                       "miss_distance": float(message.value['close_approach_data'][0]['miss_distance']['kilometers'])}}  # Solo kilometros
+                       "miss_distance": float(
+                           message.value['close_approach_data'][0]['miss_distance']['kilometers'])}}  # Solo kilometros
 
             asteroides.insert_one(aux)
             print(aux)
