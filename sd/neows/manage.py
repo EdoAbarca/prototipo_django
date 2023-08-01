@@ -92,10 +92,10 @@ def filtrarData(consumer):
                    "id": message.value['id'],
                    "name": message.value['name'],
                    "estimated_diameter": {
-                       "estimated_diameter_min": message.value['estimated_diameter']['meters'][
-                           'estimated_diameter_min'],
-                       "estimated_diameter_max": message.value['estimated_diameter']['meters'][
-                           'estimated_diameter_max']},  # Solo metros
+                       "estimated_diameter_min": message.value['estimated_diameter']['meters']
+                       ['estimated_diameter_min'],
+                       "estimated_diameter_max": message.value['estimated_diameter']['meters']
+                       ['estimated_diameter_max']},  # Solo metros
                    "is_potentially_hazardous_asteroid": message.value['is_potentially_hazardous_asteroid'],
                    "close_approach_data": {
                        "close_approach_date": message.value['close_approach_data'][0]['close_approach_date'],
